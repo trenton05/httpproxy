@@ -69,7 +69,7 @@ function handleRequest(req, res){
 					data += d;
 				});
 				req.on('end', function () {
-					var post = {method: 'POST', host: u.query.host, data: data, path: u.query.path, res: res, id: Math.random()};
+					var post = {method: 'POST', host: u.query.host, data: data, path: u.query.path + u.search, res: res, id: Math.random()};
 					posting[post.id] = post;
 					res.on('close', function() {
 						delete posting[post.id];
@@ -88,7 +88,7 @@ function handleRequest(req, res){
 
 				proxy();
 			} else if (u.pathname === '/push') {
-				var post = {method: 'GET', path: u.query.path, res: res, host: u.query.host, id: Math.random()};
+				var post = {method: 'GET', path: u.query.path + u.search, res: res, host: u.query.host, id: Math.random()};
 				posting[post.id] = post;
 				res.on('close', function() {
 					delete posting[post.id];
