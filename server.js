@@ -30,6 +30,7 @@ function proxy() {
 				path: post.path,
 				method: post.method,
 				host: post.host,
+				headers: post.headers,
 				id: i
 			});
 			console.log(data);
@@ -69,7 +70,7 @@ function handleRequest(req, res){
 					data += d;
 				});
 				req.on('end', function () {
-					var post = {method: 'POST', host: u.query.host, data: data, path: u.query.path + u.search, res: res, id: Math.random()};
+					var post = {method: 'POST', host: u.query.host, data: data, path: u.query.path + u.search, res: res, id: Math.random(), headers: req.headers};
 					posting[post.id] = post;
 					res.on('close', function() {
 						delete posting[post.id];

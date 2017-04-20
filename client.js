@@ -2,7 +2,7 @@
 
 var https = require('https');
 var fs = require('fs');
-var host = fs.readFileSync('ssl.host', 'utf-8');
+var host = fs.readFileSync('ssl.host', 'utf-8').trim();
 
 var options = {
 	host: host,
@@ -24,6 +24,7 @@ function doRequest() {
 				host: json.host,
 				port: 443,
 				path: json.path,
+				headers: json.headers,
 				method: json.method
 			}, function (res) {
 				var output = '';
@@ -45,6 +46,7 @@ function doRequest() {
 					});
 					provide.end(JSON.stringify({
 						data: output,
+						headers: res.headers,
 						statusCode: res.statusCode,
 						id: json.id
 					}));
